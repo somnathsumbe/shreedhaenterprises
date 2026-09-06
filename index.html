@@ -1678,6 +1678,15 @@
 
   </footer>
 
+  <button
+    id="backToTop"
+    type="button"
+    aria-label="Back to top"
+    class="fixed bottom-5 right-5 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand-300/70 bg-slate-900 text-xl font-bold text-white shadow-[0_12px_30px_rgba(15,23,42,0.28)] transition-all duration-300 ease-out opacity-0 invisible translate-y-3 pointer-events-none hover:-translate-y-1 hover:scale-105 hover:shadow-[0_16px_32px_rgba(245,158,11,0.28)] focus:outline-none focus:ring-4 focus:ring-brand-400/30 md:h-14 md:w-14 md:bottom-6 md:right-6 sm:bottom-20 sm:right-4"
+  >
+    <span aria-hidden="true">↑</span>
+  </button>
+
 
   <!-- =========================================================
        JAVASCRIPT
@@ -1713,6 +1722,72 @@
     const form = $("#contactForm");
 
     const formMessage = $("#formMessage");
+
+    const backToTopBtn = $("#backToTop");
+
+
+    /* ---------------------------------------------------------
+       BACK TO TOP BUTTON
+    --------------------------------------------------------- */
+
+    const toggleBackToTopButton = () => {
+      const shouldShow = window.scrollY > 300;
+
+      backToTopBtn.classList.toggle(
+        "opacity-0",
+        !shouldShow
+      );
+
+      backToTopBtn.classList.toggle(
+        "invisible",
+        !shouldShow
+      );
+
+      backToTopBtn.classList.toggle(
+        "pointer-events-none",
+        !shouldShow
+      );
+
+      backToTopBtn.classList.toggle(
+        "translate-y-3",
+        !shouldShow
+      );
+
+      backToTopBtn.classList.toggle(
+        "opacity-100",
+        shouldShow
+      );
+
+      backToTopBtn.classList.toggle(
+        "visible",
+        shouldShow
+      );
+
+      backToTopBtn.classList.toggle(
+        "translate-y-0",
+        shouldShow
+      );
+    };
+
+    backToTopBtn.addEventListener(
+      "click",
+      () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    );
+
+    window.addEventListener(
+      "scroll",
+      toggleBackToTopButton,
+      {
+        passive: true
+      }
+    );
+
+    toggleBackToTopButton();
 
 
     /* ---------------------------------------------------------
