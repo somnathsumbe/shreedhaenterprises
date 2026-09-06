@@ -84,6 +84,12 @@
       min-height: 100vh;
     }
 
+    @media (max-width: 767px) {
+      body {
+        padding-bottom: calc(86px + env(safe-area-inset-bottom));
+      }
+    }
+
     @media (max-width: 640px) {
       .hero-heading {
         font-size: clamp(2.5rem, 12vw, 4.2rem);
@@ -1678,14 +1684,201 @@
 
   </footer>
 
-  <button
-    id="backToTop"
-    type="button"
-    aria-label="Back to top"
-    class="fixed bottom-5 right-5 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand-300/70 bg-slate-900 text-xl font-bold text-white shadow-[0_12px_30px_rgba(15,23,42,0.28)] transition-all duration-300 ease-out opacity-0 invisible translate-y-3 pointer-events-none hover:-translate-y-1 hover:scale-105 hover:shadow-[0_16px_32px_rgba(245,158,11,0.28)] focus:outline-none focus:ring-4 focus:ring-brand-400/30 md:h-14 md:w-14 md:bottom-6 md:right-6 sm:bottom-20 sm:right-4"
+  <nav
+    aria-label="Quick Contact"
+    class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur-md md:hidden"
   >
-    <span aria-hidden="true">↑</span>
-  </button>
+    <div class="grid grid-cols-3 gap-1 px-2 pb-[calc(10px+env(safe-area-inset-bottom))] pt-2">
+      <a
+        href="tel:+919028787219"
+        aria-label="Call Shreedha Enterprises"
+        class="inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-brand-500 px-3 py-3 text-xs font-bold uppercase tracking-wider text-slate-950 transition active:scale-[0.98]"
+      >
+        📞 Call
+      </a>
+
+      <a
+        href="https://wa.me/919028787219?text=Hello%20Shreedha%20Enterprises%2C%20I%20am%20interested%20in%20your%20products%20and%20services.%20Please%20share%20more%20details%20and%20quotation."
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with Shreedha Enterprises on WhatsApp"
+        class="inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-[#25D366] px-3 py-3 text-xs font-bold uppercase tracking-wider text-white transition active:scale-[0.98]"
+      >
+        💬 WhatsApp
+      </a>
+
+      <button
+        type="button"
+        data-open-quote
+        aria-label="Request a quotation"
+        class="inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-slate-950 px-3 py-3 text-xs font-bold uppercase tracking-wider text-white transition active:scale-[0.98]"
+      >
+        📋 Quote
+      </button>
+    </div>
+  </nav>
+
+  <div class="fixed bottom-6 right-6 z-50 hidden flex-col items-center gap-3 md:flex">
+    <a
+      href="tel:+919028787219"
+      aria-label="Call Shreedha Enterprises"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-500 text-xl font-bold text-slate-950 shadow-[0_12px_30px_rgba(245,158,11,0.35)] transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-brand-400/30"
+    >
+      <span aria-hidden="true">☎</span>
+    </a>
+
+    <a
+      href="https://wa.me/919028787219?text=Hello%20Shreedha%20Enterprises%2C%20I%20am%20interested%20in%20your%20products%20and%20services.%20Please%20share%20more%20details%20and%20quotation."
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with Shreedha Enterprises on WhatsApp"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-2xl text-white shadow-[0_12px_30px_rgba(37,211,102,0.35)] transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-[0_16px_32px_rgba(37,211,102,0.35)] focus:outline-none focus:ring-4 focus:ring-[#25D366]/30"
+    >
+      <span aria-hidden="true">✆</span>
+    </a>
+
+    <button
+      type="button"
+      data-open-quote
+      aria-label="Request a quotation"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-lg font-bold text-white shadow-[0_12px_30px_rgba(15,23,42,0.28)] transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-[0_16px_32px_rgba(245,158,11,0.28)] focus:outline-none focus:ring-4 focus:ring-brand-400/30"
+    >
+      <span aria-hidden="true">📋</span>
+    </button>
+
+    <button
+      id="backToTop"
+      type="button"
+      aria-label="Back to top"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand-300/70 bg-slate-900 text-xl font-bold text-white shadow-[0_12px_30px_rgba(15,23,42,0.28)] transition-all duration-300 ease-out opacity-0 invisible translate-y-3 pointer-events-none hover:-translate-y-1 hover:scale-105 hover:shadow-[0_16px_32px_rgba(245,158,11,0.28)] focus:outline-none focus:ring-4 focus:ring-brand-400/30"
+    >
+      <span aria-hidden="true">↑</span>
+    </button>
+  </div>
+
+  <div
+    id="quoteModal"
+    class="fixed inset-0 z-[60] hidden items-end justify-center bg-slate-950/60 p-4 backdrop-blur-sm md:items-center"
+    aria-hidden="true"
+  >
+    <div class="w-full max-w-lg rounded-[1.75rem] bg-white p-5 shadow-[0_25px_70px_rgba(15,23,42,0.28)] md:p-7">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
+            Get Quote
+          </p>
+          <h3 class="mt-2 text-2xl font-bold text-slate-950">
+            Request a quotation
+          </h3>
+        </div>
+
+        <button
+          type="button"
+          data-close-quote
+          aria-label="Close quote form"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-xl font-bold text-slate-700 transition hover:bg-slate-200 focus:outline-none focus:ring-4 focus:ring-brand-400/30"
+        >
+          ×
+        </button>
+      </div>
+
+      <form id="quoteForm" class="mt-6 space-y-4">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700">Name *</span>
+            <input
+              required
+              name="name"
+              type="text"
+              class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+              placeholder="Your name"
+            />
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700">Mobile Number *</span>
+            <input
+              required
+              name="mobile"
+              type="tel"
+              class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+              placeholder="+91 98xxx xxxxx"
+            />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700">Company / Organization</span>
+          <input
+            name="company"
+            type="text"
+            class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+            placeholder="Company or organization name"
+          />
+        </label>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700">Product / Service *</span>
+            <input
+              id="quoteProduct"
+              required
+              name="product"
+              type="text"
+              class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+              placeholder="Cement, Hardware, Electrical..."
+            />
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700">Quantity</span>
+            <input
+              name="quantity"
+              type="text"
+              class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+              placeholder="e.g. 200 units"
+            />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700">Requirement Details</span>
+          <textarea
+            name="details"
+            rows="4"
+            class="w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+            placeholder="Tell us about your requirement and timeline..."
+          ></textarea>
+        </label>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700">Preferred Contact Method</span>
+          <select
+            name="contactMethod"
+            class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+          >
+            <option value="Call">Call</option>
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="Email">Email</option>
+          </select>
+        </label>
+
+        <button
+          type="submit"
+          class="w-full rounded-xl bg-slate-950 px-6 py-3.5 font-bold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-4 focus:ring-brand-400/30"
+        >
+          Request Quote
+        </button>
+
+        <p
+          id="quoteSuccess"
+          class="hidden rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700"
+        >
+          ✅ Thank You! Your quotation request has been received. Our team will contact you shortly.
+        </p>
+      </form>
+    </div>
+  </div>
 
 
   <!-- =========================================================
@@ -1724,6 +1917,142 @@
     const formMessage = $("#formMessage");
 
     const backToTopBtn = $("#backToTop");
+
+    const quoteModal = $("#quoteModal");
+
+    const quoteForm = $("#quoteForm");
+
+    const quoteSuccess = $("#quoteSuccess");
+
+    const quoteProductInput = $("#quoteProduct");
+
+    const BUSINESS_CONFIG = {
+      phone: "+919028787219",
+      whatsapp: "919028787219",
+      email: "somasumbe@gmail.com",
+      companyName: "Shreedha Enterprises"
+    };
+
+    const trackEvent = eventName => {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: eventName
+        });
+      }
+    };
+
+    const getProductFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const product = params.get("product");
+      return product ? decodeURIComponent(product) : "";
+    };
+
+    const buildWhatsAppLink = (productName = "") => {
+      const detailText = productName
+        ? `Hello ${BUSINESS_CONFIG.companyName},\nI am interested in: ${productName}.\nPlease share price, availability and quotation.`
+        : `Hello ${BUSINESS_CONFIG.companyName},\nI am interested in your products and services.\nPlease share more details and quotation.`;
+
+      return `https://wa.me/${BUSINESS_CONFIG.whatsapp}?text=${encodeURIComponent(detailText)}`;
+    };
+
+    const updateQuickLinks = () => {
+      const productName = getProductFromUrl();
+      const whatsappLinks = $$('a[aria-label="Chat with Shreedha Enterprises on WhatsApp"]');
+
+      whatsappLinks.forEach(link => {
+        link.href = buildWhatsAppLink(productName);
+      });
+
+      if (productName && quoteProductInput) {
+        quoteProductInput.value = productName;
+      }
+    };
+
+    const openQuoteModal = () => {
+      if (!quoteModal) {
+        return;
+      }
+
+      const productName = getProductFromUrl();
+      if (productName && quoteProductInput) {
+        quoteProductInput.value = productName;
+      }
+
+      quoteModal.classList.remove("hidden");
+      quoteModal.classList.add("flex");
+      quoteModal.setAttribute("aria-hidden", "false");
+      trackEvent("contact_quote_clicked");
+    };
+
+    const closeQuoteModal = () => {
+      if (!quoteModal) {
+        return;
+      }
+
+      quoteModal.classList.add("hidden");
+      quoteModal.classList.remove("flex");
+      quoteModal.setAttribute("aria-hidden", "true");
+    };
+
+    $$('[data-open-quote]').forEach(button => {
+      button.addEventListener("click", openQuoteModal);
+    });
+
+    $$("[data-close-quote]").forEach(button => {
+      button.addEventListener("click", closeQuoteModal);
+    });
+
+    quoteModal.addEventListener("click", event => {
+      if (event.target === quoteModal) {
+        closeQuoteModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !quoteModal.classList.contains("hidden")) {
+        closeQuoteModal();
+      }
+    });
+
+    quoteForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const formData = new FormData(quoteForm);
+      const name = (formData.get("name") || "").toString().trim();
+      const mobile = (formData.get("mobile") || "").toString().trim();
+      const company = (formData.get("company") || "").toString().trim();
+      const product = (formData.get("product") || "").toString().trim();
+      const quantity = (formData.get("quantity") || "").toString().trim();
+      const details = (formData.get("details") || "").toString().trim();
+      const contactMethod = (formData.get("contactMethod") || "Call").toString();
+
+      const message =
+        `Hello ${BUSINESS_CONFIG.companyName},%0A` +
+        `Name: ${name}%0A` +
+        `Mobile: ${mobile}%0A` +
+        `Company: ${company || "Not provided"}%0A` +
+        `Product/Service: ${product}%0A` +
+        `Quantity: ${quantity || "Not provided"}%0A` +
+        `Preferred Contact: ${contactMethod}%0A%0A` +
+        `Requirement Details:%0A${details || "Not provided"}`;
+
+      const mailtoLink = `mailto:${BUSINESS_CONFIG.email}?subject=${encodeURIComponent("Quotation Request - " + BUSINESS_CONFIG.companyName)}&body=${message}`;
+
+      trackEvent("quote_form_submitted");
+      quoteSuccess.classList.remove("hidden");
+      quoteSuccess.classList.add("block");
+      quoteForm.reset();
+
+      window.location.href = mailtoLink;
+
+      setTimeout(() => {
+        closeQuoteModal();
+        quoteSuccess.classList.add("hidden");
+        quoteSuccess.classList.remove("block");
+      }, 2200);
+    });
+
+    updateQuickLinks();
 
 
     /* ---------------------------------------------------------
