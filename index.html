@@ -1538,13 +1538,10 @@
 
         <form
           id="contactForm"
-          action="https://formspree.io/f/YOUR_FORM_ID"
-          method="POST"
           class="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:p-8 reveal"
         >
 
-          <input type="hidden" name="_subject" value="New enquiry from Shreedha Enterprises website" />
-          <input type="hidden" name="_replyto" value="somasumbe@gmail.com" />
+          <input type="hidden" name="reply_to" value="" />
 
           <div class="grid gap-5 sm:grid-cols-2">
 
@@ -1607,12 +1604,62 @@
           <label class="mt-5 block">
 
             <span class="text-sm font-semibold text-slate-700">
+              Product / Service
+            </span>
+
+            <input
+              name="product"
+              type="text"
+              class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+              placeholder="Cement, hardware, electrical, etc."
+            />
+
+          </label>
+
+          <div class="mt-5 grid gap-5 sm:grid-cols-2">
+
+            <label class="block">
+
+              <span class="text-sm font-semibold text-slate-700">
+                Quantity
+              </span>
+
+              <input
+                name="quantity"
+                type="text"
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+                placeholder="e.g. 100 bags"
+              />
+
+            </label>
+
+            <label class="block">
+
+              <span class="text-sm font-semibold text-slate-700">
+                Delivery Location
+              </span>
+
+              <input
+                name="location"
+                type="text"
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
+                placeholder="City, state or site address"
+              />
+
+            </label>
+
+          </div>
+
+
+          <label class="mt-5 block">
+
+            <span class="text-sm font-semibold text-slate-700">
               Requirement
             </span>
 
             <textarea
               required
-              name="message"
+              name="requirement"
               rows="5"
               class="mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
               placeholder="Tell us about your product or procurement requirement..."
@@ -1683,6 +1730,11 @@
     </div>
 
   </footer>
+
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+  ></script>
 
   <nav
     aria-label="Quick Contact"
@@ -1925,6 +1977,92 @@
     const quoteSuccess = $("#quoteSuccess");
 
     const quoteProductInput = $("#quoteProduct");
+
+    const submitButton = form?.querySelector('button[type="submit"]') || null;
+
+    const EMAILJS_CONFIG = {
+      publicKey: "YOUR_PUBLIC_KEY",
+      serviceId: "YOUR_SERVICE_ID",
+      templateId: "YOUR_TEMPLATE_ID"
+    };
+
+    const showFormMessage = (message, type = "success") => {
+      if (!formMessage) {
+        return;
+      }
+
+      formMessage.textContent = message;
+      formMessage.classList.remove("hidden");
+      formMessage.classList.remove("bg-red-50", "text-red-700", "bg-emerald-50", "text-emerald-700", "bg-amber-50", "text-amber-700");
+
+      if (type === "error") {
+        formMessage.classList.add("bg-red-50", "text-red-700");
+      } else if (type === "pending") {
+        formMessage.classList.add("bg-amber-50", "text-amber-700");
+      } else {
+        formMessage.classList.add("bg-emerald-50", "text-emerald-700");
+      }
+    };
+
+    const clearFormMessage = () => {
+      if (!formMessage) {
+        return;
+      }
+
+      formMessage.textContent = "";
+      formMessage.classList.add("hidden");
+      formMessage.classList.remove("bg-red-50", "text-red-700", "bg-emerald-50", "text-emerald-700", "bg-amber-50", "text-amber-700");
+    };
+
+    const isValidPhone = value => /^\+?[0-9\s-]{10,15}$/.test(value.trim());
+
+    const isValidEmail = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+    const validateContactForm = () => {
+      const name = (form.querySelector('[name="name"]')?.value || "").trim();
+      const phone = (form.querySelector('[name="phone"]')?.value || "").trim();
+      const email = (form.querySelector('[name="email"]')?.value || "").trim();
+      const requirement = (form.querySelector('[name="requirement"]')?.value || "").trim();
+
+      if (!name) {
+        showFormMessage("Please enter your name.", "error");
+        return false;
+      }
+
+      if (!phone) {
+        showFormMessage("Please enter your phone number.", "error");
+        return false;
+      }
+
+      if (!isValidPhone(phone)) {
+        showFormMessage("Please enter a valid phone number.", "error");
+        return false;
+      }
+
+      if (!email) {
+        showFormMessage("Please enter your email address.", "error");
+        return false;
+      }
+
+      if (!isValidEmail(email)) {
+        showFormMessage("Please enter a valid email address.", "error");
+        return false;
+      }
+
+      if (!requirement) {
+        showFormMessage("Please enter your requirement details.", "error");
+        return false;
+      }
+
+      clearFormMessage();
+      return true;
+    };
+
+    if (window.emailjs) {
+      emailjs.init({
+        publicKey: EMAILJS_CONFIG.publicKey
+      });
+    }
 
     const BUSINESS_CONFIG = {
       phone: "+919028787219",
@@ -2277,11 +2415,51 @@
       formMessage.classList.add("bg-red-50", "text-red-700");
     }
 
-    form.addEventListener("submit", () => {
-      formMessage.textContent = "Sending your enquiry...";
-      formMessage.classList.remove("hidden");
-      formMessage.classList.remove("bg-red-50", "text-red-700");
-      formMessage.classList.add("bg-emerald-50", "text-emerald-700");
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      if (!validateContactForm()) {
+        formMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        return;
+      }
+
+      const formEmail = form.querySelector('[name="email"]')?.value?.trim() || "";
+      const replyToField = form.querySelector('[name="reply_to"]');
+      if (replyToField) {
+        replyToField.value = formEmail;
+      }
+
+      if (!submitButton) {
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+      showFormMessage("Sending...", "pending");
+
+      try {
+        if (!window.emailjs) {
+          throw new Error("EmailJS is not loaded.");
+        }
+
+        await emailjs.sendForm(
+          EMAILJS_CONFIG.serviceId,
+          EMAILJS_CONFIG.templateId,
+          form,
+          {
+            publicKey: EMAILJS_CONFIG.publicKey
+          }
+        );
+
+        showFormMessage("Thank you! Your enquiry has been sent successfully. We will contact you shortly.", "success");
+        form.reset();
+      } catch (error) {
+        console.error("EmailJS send error:", error);
+        showFormMessage("Unable to send your enquiry. Please try again or contact us on WhatsApp.", "error");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Enquiry";
+      }
     });
 
 
