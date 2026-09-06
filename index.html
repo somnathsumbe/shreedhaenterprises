@@ -1532,12 +1532,13 @@
 
         <form
           id="contactForm"
-          action="mailer.php"
+          action="https://formspree.io/f/YOUR_FORM_ID"
           method="POST"
           class="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:p-8 reveal"
         >
 
-          <input type="hidden" name="form_type" value="enquiry" />
+          <input type="hidden" name="_subject" value="New enquiry from Shreedha Enterprises website" />
+          <input type="hidden" name="_replyto" value="somasumbe@gmail.com" />
 
           <div class="grid gap-5 sm:grid-cols-2">
 
